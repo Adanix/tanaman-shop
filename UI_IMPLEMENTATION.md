@@ -2,7 +2,7 @@
 
 **Proyek:** Plantify Official (Plant Marketplace & Management Website)  
 **Versi:** 1.0 (Tailwind CSS v4 & Laravel 13 Blade Architecture)  
-**Status:** Terverifikasi & Aktif di Live Preview Domain (`https://demo.ramadadawah.my.id`)  
+**Status:** Terverifikasi & Aktif di Dedicated Production Domain (`https://plantify.ramadadawah.my.id`)  
 **Basis Template:** Fernwick Plant Shop Ecommerce (Disesuaikan penuh dengan PRD v1.3)
 
 ---
@@ -14,7 +14,7 @@ Template UI dari berkas `fernwick-plant-shop-ecommerce-html-template.zip` telah 
 ### Filosofi Desain: "Greenhouse Glasshouse Ground & Shop-First"
 - **Color Identity:** Warna hijau diperlakukan sebagai *ink* (teks utama `#14251a`), bukan sekadar aksen. Latar belakang menggunakan warna tanah rumah kaca dingin (*pale glasshouse ground* `#edf1ea`) dengan kartu putih bersih (*crisp paper* `#fbfcfa`), dipertegas aksen kuningan (*brass ochre* `#c9861f`) untuk tombol call-to-action (CTA).
 - **Shop-First Layout:** Berbeda dari website konvensional yang menyajikan hero marketing raksasa yang memaksa pengguna menggulir ke bawah, Plantify langsung membuka etalase dengan **Category Rail horizontal** dan **koleksi siap kirim**.
-- **Dual-Access Live:** Dapat diakses secara publik melalui domain [https://demo.ramadadawah.my.id](https://demo.ramadadawah.my.id) dan internal via Tailscale `http://100.108.222.30:8805`.
+- **Dual-Access Live:** Dapat diakses secara publik melalui domain [https://plantify.ramadadawah.my.id](https://plantify.ramadadawah.my.id) dan internal via Tailscale `http://100.108.222.30:8805`.
 
 ---
 
@@ -158,4 +158,4 @@ Semua interaksi berjalan cepat menggunakan Vanilla JavaScript modern tanpa depen
   - `GET /care` &rarr; 200 OK
   - `GET /about` &rarr; 200 OK
 - [x] Zero-Error pada `storage/logs/laravel.log`.
-- [x] Reverse proxy Nginx (`demo.ramadadawah.my.id`) aktif merutekan permintaan ke kontainer `plantify-app-1` (port 8805).
+- [x] Reverse proxy Nginx (`plantify.ramadadawah.my.id`) aktif merutekan permintaan ke kontainer `plantify-app-1` (port 8805).

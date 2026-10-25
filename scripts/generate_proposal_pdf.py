@@ -72,7 +72,7 @@ class NumberedCanvas(canvas.Canvas):
         # Bottom running footer
         self.setFont("Helvetica", 7.5)
         self.setFillColor(colors.HexColor("#4A5568"))
-        self.drawString(40, 26, "Plantify Official • Bantul, Special Region of Yogyakarta • https://demo.ramadadawah.my.id")
+        self.drawString(40, 26, "Plantify Official • Bantul, Special Region of Yogyakarta • https://plantify.ramadadawah.my.id")
         self.drawRightString(595 - 40, 26, f"Page {self._pageNumber} of {page_count}")
         self.restoreState()
 
@@ -272,7 +272,7 @@ def build_pdf(filename):
     # Transmittal & Meta Table
     cover_meta = [
         [Paragraph("<b>Product Name:</b>", styles['TableCellBold']), Paragraph("Plantify Official — Botanical Living Hub", styles['TableCell'])],
-        [Paragraph("<b>Live Web Application:</b>", styles['TableCellBold']), Paragraph("https://demo.ramadadawah.my.id", styles['TableCell'])],
+        [Paragraph("<b>Live Web Application:</b>", styles['TableCellBold']), Paragraph("https://plantify.ramadadawah.my.id", styles['TableCell'])],
         [Paragraph("<b>Physical Nursery Desk:</b>", styles['TableCellBold']), Paragraph("Jl. Agrowisata Hijau No. 24, Botanical District, Bantul, Special Region of Yogyakarta", styles['TableCell'])],
         [Paragraph("<b>Document Classification:</b>", styles['TableCellBold']), Paragraph("Enterprise Technical Proposal & System Architecture Specification", styles['TableCell'])],
         [Paragraph("<b>Document Version:</b>", styles['TableCellBold']), Paragraph("Version 2.2 — Production & Interactive Demo Edition", styles['TableCell'])],
@@ -1072,8 +1072,8 @@ def build_pdf(filename):
         [Paragraph("<b>Operating Entity:</b>", styles['TableCellBold']), Paragraph("Plantify Official Nursery & Botanical Care Center", styles['TableCell'])],
         [Paragraph("<b>Physical Nursery Address:</b>", styles['TableCellBold']), Paragraph("Jl. Agrowisata Hijau No. 24, Botanical District, Bantul, Special Region of Yogyakarta", styles['TableCell'])],
         [Paragraph("<b>Nursery Operating Hours:</b>", styles['TableCellBold']), Paragraph("Tuesday &ndash; Sunday, 08:30 &ndash; 17:00 WIB (Closed Mondays for Specimen Care)", styles['TableCell'])],
-        [Paragraph("<b>Live Web Application:</b>", styles['TableCellBold']), Paragraph("https://demo.ramadadawah.my.id", styles['TableCell'])],
-        [Paragraph("<b>Proposal PDF Endpoint:</b>", styles['TableCellBold']), Paragraph("https://demo.ramadadawah.my.id/proposal-pdf", styles['TableCell'])],
+        [Paragraph("<b>Live Web Application:</b>", styles['TableCellBold']), Paragraph("https://plantify.ramadadawah.my.id", styles['TableCell'])],
+        [Paragraph("<b>Proposal PDF Endpoint:</b>", styles['TableCellBold']), Paragraph("https://plantify.ramadadawah.my.id/proposal-pdf", styles['TableCell'])],
         [Paragraph("<b>Engineering Team:</b>", styles['TableCellBold']), Paragraph("Adanix Software Engineering & Botanical Digital Solutions", styles['TableCell'])],
         [Paragraph("<b>Official Email:</b>", styles['TableCellBold']), Paragraph("nixresponding@gmail.com", styles['TableCell'])],
         [Paragraph("<b>Repository:</b>", styles['TableCellBold']), Paragraph("https://github.com/adanix", styles['TableCell'])],

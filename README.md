@@ -7,8 +7,8 @@
 [![Ciora AI](https://img.shields.io/badge/Ciora_AI-Vision_%26_Chat-1E3A2F?style=for-the-badge&logo=openai&logoColor=white)](https://ciora.id)
 [![License: MIT](https://img.shields.io/badge/License-MIT-D69E2E?style=for-the-badge)](LICENSE)
 
-> **Live Production Demo**: [https://demo.ramadadawah.my.id](https://demo.ramadadawah.my.id)  
-> **Executive Proposal Document (PDF)**: [https://demo.ramadadawah.my.id/proposal-pdf](https://demo.ramadadawah.my.id/proposal-pdf)  
+> **Live Production**: [https://plantify.ramadadawah.my.id](https://plantify.ramadadawah.my.id)  
+> **Executive Proposal Document (PDF)**: [https://plantify.ramadadawah.my.id/proposal-pdf](https://plantify.ramadadawah.my.id/proposal-pdf)  
 > **Physical Nursery Desk**: Jl. Agrowisata Hijau No. 24, Botanical District, Bantul, Special Region of Yogyakarta  
 > **Repository**: [https://github.com/Adanix/tanaman-shop](https://github.com/Adanix/tanaman-shop)
 
@@ -197,7 +197,7 @@ python3 scripts/generate_proposal_pdf.py
 ```
 
 The document is served directly inline in browsers at:
-`GET /proposal-pdf` &rarr; [https://demo.ramadadawah.my.id/proposal-pdf](https://demo.ramadadawah.my.id/proposal-pdf)
+`GET /proposal-pdf` &rarr; [https://plantify.ramadadawah.my.id/proposal-pdf](https://plantify.ramadadawah.my.id/proposal-pdf)
 
 ---
 
