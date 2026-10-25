@@ -188,4 +188,61 @@
         </div>
     </section>
 
+    <!-- 5. Botanical Intelligence / AI Plant Doctor Showcase -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mb-16">
+        <div class="relative bg-gradient-to-br from-forest to-forest-dark text-glass rounded-3xl p-8 sm:p-12 border border-forest-2 overflow-hidden shadow-xl">
+            <div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-ochre/10 blur-3xl pointer-events-none"></div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                <div class="lg:col-span-7 space-y-4">
+                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-ochre/20 text-ochre text-xs font-mono font-semibold border border-ochre/30 uppercase tracking-wider">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        Botanical Intelligence
+                    </span>
+                    <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-glass tracking-tight">
+                        AI Plant Doctor &amp; Botanical Care
+                    </h2>
+                    <p class="text-xs sm:text-sm text-glass/80 leading-relaxed max-w-xl">
+                        Diagnose foliage anomalies with Ciora AI Vision and consult our botanical assistant for expert organic recovery guidance. Active demo with expanded 100x daily consultation capacity.
+                    </p>
+                    <div class="pt-2 flex flex-wrap items-center gap-3">
+                        <a href="{{ route('care.index') }}" class="btn btn-ochre text-xs sm:text-sm px-6 py-3 font-semibold shadow-sm">
+                            Diagnose Foliage with AI &rarr;
+                        </a>
+                        <span class="text-xs font-mono text-ochre bg-ochre-wash px-3 py-2 rounded-xl border border-ochre/30">
+                            100x Daily Diagnostic Quota
+                        </span>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5">
+                    <div class="bg-forest-2/80 backdrop-blur-sm border border-forest-3 rounded-2xl p-5 space-y-3 shadow-lg">
+                        <div class="flex items-center justify-between pb-3 border-b border-forest-3 text-xs">
+                            <span class="font-mono text-[11px] uppercase tracking-wider text-ochre font-semibold">Live Vision Diagnostic</span>
+                            <span class="badge badge-stock text-[10px]">Ciora Vision Online</span>
+                        </div>
+                        <div class="space-y-2 text-xs text-glass/70 font-mono">
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-ochre"></span>
+                                <span>Foliage anomaly &amp; pest detection</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-stock"></span>
+                                <span>Immediate organic rescue protocol</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-ochre"></span>
+                                <span>Contextual plant care chatbot</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 @endsection

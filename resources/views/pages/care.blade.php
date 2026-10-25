@@ -96,10 +96,10 @@
                     <div class="p-4 rounded-xl bg-forest-2 border border-forest-3 text-xs space-y-2">
                         <div class="flex items-center justify-between">
                             <span class="text-hairline-soft font-mono uppercase text-[11px]">Daily Diagnosis Quota</span>
-                            <span class="font-mono font-bold text-ochre" x-text="remainingQuota + ' / 5 remaining today'"></span>
+                            <span class="font-mono font-bold text-ochre" x-text="remainingQuota + ' / 100 remaining today'"></span>
                         </div>
                         <div class="w-full h-1.5 bg-forest-dark rounded-full overflow-hidden">
-                            <div class="h-full bg-ochre transition-all" :style="'width: ' + (remainingQuota / 5 * 100) + '%'"></div>
+                            <div class="h-full bg-ochre transition-all" :style="'width: ' + Math.min(100, (remainingQuota / 100 * 100)) + '%'"></div>
                         </div>
                         @guest
                             <p class="text-[11px] text-ochre pt-1">
@@ -113,7 +113,7 @@
                 <div class="lg:col-span-7 bg-forest-dark border border-forest-2 rounded-2xl p-6 shadow-inner space-y-4">
                     
                     @auth
-                        @if(Auth::user()->hasVerifiedEmail())
+                        @if(Auth::user()->hasVerifiedEmail() || config('app.demo_mode'))
                             <!-- Photo Uploader -->
                             <div>
                                 <label class="block text-xs font-mono uppercase tracking-wider text-hairline mb-2">Upload Clear Foliage Photo</label>
@@ -235,7 +235,7 @@
                     <h2 class="font-display font-bold text-xl text-forest">Botanical Care Assistant</h2>
                     <p class="text-xs text-forest-3 mt-0.5">Real-time consultation with AI care guidelines</p>
                 </div>
-                <span class="badge badge-stock text-xs" x-text="chatQuota + ' questions remaining today'"></span>
+                <span class="badge badge-stock text-xs" x-text="chatQuota + ' / 100 questions remaining today'"></span>
             </div>
 
             <!-- Chat Messages Log -->
@@ -257,7 +257,7 @@
 
             <!-- Chat Input Box -->
             @auth
-                @if(Auth::user()->hasVerifiedEmail())
+                @if(Auth::user()->hasVerifiedEmail() || config('app.demo_mode'))
                     <form @submit.prevent="sendChat" class="flex gap-2">
                         <input type="text" x-model="inputMsg" placeholder="Ask e.g. How often should I fertilize my Monstera in winter?..." class="flex-grow text-xs h-11 px-4 bg-glass border border-hairline rounded-xl text-forest focus:outline-none focus:border-ochre" :disabled="chatLoading || chatQuota <= 0" />
                         <button type="submit" class="btn btn-primary text-xs h-11 !px-5" :disabled="chatLoading || chatQuota <= 0">

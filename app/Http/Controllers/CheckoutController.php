@@ -42,8 +42,8 @@ class CheckoutController extends Controller
 
         $storeInfo = [
             'name' => (string) StoreSetting::get('store_name', 'Plantify Official'),
-            'address' => (string) StoreSetting::get('store_address', 'Jl. Agrowisata Hijau No. 24'),
-            'city' => (string) StoreSetting::get('store_city', 'Jakarta Selatan'),
+            'address' => (string) StoreSetting::get('store_address', 'Jl. Agrowisata Hijau No. 24, Botanical District'),
+            'city' => (string) StoreSetting::get('store_city', 'Bantul, Special Region of Yogyakarta'),
             'hours' => (string) StoreSetting::get('store_hours', 'Tuesday - Sunday, 08:30 - 17:00'),
         ];
 
@@ -68,10 +68,29 @@ class CheckoutController extends Controller
             'recipient_name' => ['required_if:is_gift,1', 'nullable', 'string', 'max:100'],
             'recipient_email' => ['required_if:is_gift,1', 'nullable', 'string', 'email', 'max:255'],
             'gift_message' => ['nullable', 'string', 'max:500'],
+            'payment_proof' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,pdf', 'max:4096'],
+            'sender_bank_name' => ['nullable', 'string', 'max:100'],
+            'sender_account_name' => ['nullable', 'string', 'max:100'],
         ]);
 
         try {
             $order = $this->orderService->createOrder($validated, Auth::user());
+
+            // Handle Direct Manual Bank Transfer proof upload during checkout
+            if ($order->payment_method === 'bank_transfer' && $request->hasFile('payment_proof')) {
+                $proofPath = $request->file('payment_proof')->store('transfer_proofs', 'local');
+                $order->update([
+                    'payment_proof_path' => $proofPath,
+                    'sender_bank_name' => $request->input('sender_bank_name'),
+                    'sender_account_name' => $request->input('sender_account_name'),
+                    'payment_submitted_at' => now(),
+                    'payment_status' => 'awaiting_verification',
+                    'order_status' => 'awaiting_verification',
+                ]);
+
+                return redirect()->route('order.success', ['token' => $order->tracking_token])
+                    ->with('status', 'Your order has been placed and payment proof uploaded! Verified by store staff within 2 hours.');
+            }
 
             // Handle online Stripe Checkout
             if ($order->payment_method === 'online_stripe') {

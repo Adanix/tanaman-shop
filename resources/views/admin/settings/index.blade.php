@@ -28,7 +28,7 @@
 
                     <div>
                         <label class="block text-[11px] font-mono uppercase text-forest-3 mb-1">City / Region *</label>
-                        <input type="text" name="store_city" required value="{{ old('store_city', $settings['store_city'] ?? 'Jakarta Selatan') }}" class="w-full text-xs h-9 px-3 bg-glass border border-hairline rounded-lg text-forest" />
+                        <input type="text" name="store_city" required value="{{ old('store_city', $settings['store_city'] ?? 'Bantul, Special Region of Yogyakarta') }}" class="w-full text-xs h-9 px-3 bg-glass border border-hairline rounded-lg text-forest" />
                     </div>
 
                     <div class="sm:col-span-2">

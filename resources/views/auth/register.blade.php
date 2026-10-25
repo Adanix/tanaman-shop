@@ -36,7 +36,7 @@
 
                 <div>
                     <label for="city" class="block text-xs font-mono uppercase tracking-wider text-forest-3 mb-1 font-medium">City (for Weather Reminders)</label>
-                    <input type="text" id="city" name="city" value="{{ old('city') }}" placeholder="e.g. Jakarta Selatan" class="w-full text-xs h-10 px-3 bg-glass border border-hairline rounded-xl text-forest focus:outline-none focus:border-ochre" />
+                    <input type="text" id="city" name="city" value="{{ old('city') }}" placeholder="e.g. Bantul, Special Region of Yogyakarta" class="w-full text-xs h-10 px-3 bg-glass border border-hairline rounded-xl text-forest focus:outline-none focus:border-ochre" />
                 </div>
 
                 <div>

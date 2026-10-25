@@ -56,14 +56,14 @@
                     <a href="{{ route('home') }}" class="text-sm font-medium transition-colors hover:text-ochre {{ request()->routeIs('home') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
                         Home
                     </a>
-                    <a href="{{ route('shop') }}" class="text-sm font-medium transition-colors hover:text-ochre {{ request()->routeIs('shop*') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
+                    <a href="{{ route('shop') }}" class="text-sm font-medium transition-colors hover:text-ochre {{ (request()->routeIs('shop*') || request()->routeIs('product*')) ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
                         Shop Plants
                     </a>
                     <a href="{{ route('garden.index') }}" class="text-sm font-medium transition-colors hover:text-ochre flex items-center gap-1.5 {{ request()->routeIs('garden*') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
                         <span class="w-2 h-2 rounded-full bg-stock animate-pulse"></span>
                         My Digital Garden
                     </a>
-                    <a href="{{ route('care.index') }}" class="text-sm font-medium transition-colors hover:text-ochre {{ request()->routeIs('care*') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
+                    <a href="{{ route('care.index') }}" class="text-sm font-medium transition-colors hover:text-ochre {{ (request()->routeIs('care*') || request()->routeIs('ai*')) ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
                         AI Doctor &amp; Care
                     </a>
                     <a href="{{ route('order.track.search') }}" class="text-sm font-medium transition-colors hover:text-ochre {{ request()->routeIs('order.track*') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
@@ -99,15 +99,15 @@
                                  x-transition:leave="transition ease-in duration-100" 
                                  x-transition:leave-start="opacity-100 translate-y-0 scale-100" 
                                  x-transition:leave-end="opacity-0 translate-y-1 scale-95" 
-                                 class="absolute right-0 mt-2 w-52 bg-paper rounded-xl shadow-xl border border-hairline py-1 z-50 text-xs origin-top-right">
+                                 class="absolute right-0 mt-2 w-52 bg-paper rounded-xl shadow-xl border border-hairline py-1 z-50 text-xs origin-top-right overflow-hidden">
                                 <div class="px-4 py-2 border-b border-hairline text-forest-4">
                                     Signed in as <strong class="text-forest block truncate">{{ Auth::user()->email }}</strong>
                                 </div>
-                                <a href="{{ route('garden.index') }}" class="block px-4 py-2 text-forest-2 hover:bg-glass hover:text-forest">
+                                <a href="{{ route('garden.index') }}" class="block px-4 py-2 transition-colors {{ request()->routeIs('garden*') ? 'bg-ochre-wash text-ochre font-bold border-l-2 border-ochre' : 'text-forest-2 hover:bg-glass hover:text-forest' }}">
                                     My Digital Garden
                                 </a>
                                 @if(Auth::user()->isAdmin())
-                                    <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-ochre font-semibold hover:bg-glass">
+                                    <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 transition-colors {{ request()->routeIs('admin*') ? 'bg-ochre-wash text-ochre font-bold border-l-2 border-ochre' : 'text-ochre font-semibold hover:bg-glass' }}">
                                         Admin Console
                                     </a>
                                 @endif
@@ -189,16 +189,26 @@
                     </button>
                 </div>
 
-                <nav class="flex flex-col space-y-3 text-sm font-medium">
-                    <a href="{{ route('home') }}" class="py-2 text-forest-2 hover:text-ochre">Home</a>
-                    <a href="{{ route('shop') }}" class="py-2 text-forest-2 hover:text-ochre">Shop Plants</a>
-                    <a href="{{ route('garden.index') }}" class="py-2 text-forest-2 hover:text-ochre flex items-center justify-between">
-                        <span>My Digital Garden</span>
-                        <span class="w-2 h-2 rounded-full bg-stock"></span>
+                <nav class="flex flex-col space-y-1.5 text-sm font-medium">
+                    <a href="{{ route('home') }}" class="py-2.5 px-3 rounded-xl transition-colors {{ request()->routeIs('home') ? 'bg-forest text-glass font-bold shadow-sm' : 'text-forest-2 hover:bg-glass hover:text-forest' }}">
+                        Home
                     </a>
-                    <a href="{{ route('care.index') }}" class="py-2 text-forest-2 hover:text-ochre">AI Doctor &amp; Care</a>
-                    <a href="{{ route('order.track.search') }}" class="py-2 text-forest-2 hover:text-ochre">Track Order</a>
-                    <a href="{{ route('about') }}" class="py-2 text-forest-2 hover:text-ochre">About Nursery</a>
+                    <a href="{{ route('shop') }}" class="py-2.5 px-3 rounded-xl transition-colors {{ (request()->routeIs('shop*') || request()->routeIs('product*')) ? 'bg-forest text-glass font-bold shadow-sm' : 'text-forest-2 hover:bg-glass hover:text-forest' }}">
+                        Shop Plants
+                    </a>
+                    <a href="{{ route('garden.index') }}" class="py-2.5 px-3 rounded-xl transition-colors flex items-center justify-between {{ request()->routeIs('garden*') ? 'bg-forest text-glass font-bold shadow-sm' : 'text-forest-2 hover:bg-glass hover:text-forest' }}">
+                        <span>My Digital Garden</span>
+                        <span class="w-2 h-2 rounded-full bg-stock animate-pulse"></span>
+                    </a>
+                    <a href="{{ route('care.index') }}" class="py-2.5 px-3 rounded-xl transition-colors {{ (request()->routeIs('care*') || request()->routeIs('ai*')) ? 'bg-forest text-glass font-bold shadow-sm' : 'text-forest-2 hover:bg-glass hover:text-forest' }}">
+                        AI Doctor &amp; Care
+                    </a>
+                    <a href="{{ route('order.track.search') }}" class="py-2.5 px-3 rounded-xl transition-colors {{ request()->routeIs('order.track*') ? 'bg-forest text-glass font-bold shadow-sm' : 'text-forest-2 hover:bg-glass hover:text-forest' }}">
+                        Track Order
+                    </a>
+                    <a href="{{ route('about') }}" class="py-2.5 px-3 rounded-xl transition-colors {{ request()->routeIs('about') ? 'bg-forest text-glass font-bold shadow-sm' : 'text-forest-2 hover:bg-glass hover:text-forest' }}">
+                        About Nursery
+                    </a>
                 </nav>
             </div>
 
@@ -206,7 +216,9 @@
                 @auth
                     <div class="text-xs text-forest-4 mb-2 truncate">Signed in: <strong>{{ Auth::user()->name }}</strong></div>
                     @if(Auth::user()->isAdmin())
-                        <a href="{{ route('admin.dashboard') }}" class="btn btn-primary w-full text-xs">Admin Console</a>
+                        <a href="{{ route('admin.dashboard') }}" class="btn {{ request()->routeIs('admin*') ? 'btn-ochre' : 'btn-primary' }} w-full text-xs">
+                            Admin Console
+                        </a>
                     @endif
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -372,7 +384,7 @@
                 <div class="space-y-3">
                     <h5 class="text-xs font-mono uppercase tracking-wider text-glass font-semibold">Physical Nursery Desk</h5>
                     <p class="text-xs text-glass/70 leading-relaxed">
-                        Jl. Agrowisata Hijau No. 24, Botanical District, Jakarta Selatan
+                        Jl. Agrowisata Hijau No. 24, Botanical District, Bantul, Special Region of Yogyakarta
                     </p>
                     <p class="text-xs text-glass/70 leading-relaxed">
                         Store Pickup: Tuesday &ndash; Sunday, 08:30 &ndash; 17:00

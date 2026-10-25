@@ -142,25 +142,34 @@
                         @csrf
                         <input type="hidden" name="plant_id" value="{{ $plant->id }}" />
                         
-                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
                             <!-- Stepper -->
-                            <div class="flex items-center justify-between border border-hairline rounded-full bg-paper px-3 py-1.5 h-12 w-36 flex-shrink-0">
+                            <div class="flex items-center justify-between border border-hairline rounded-full bg-paper px-3 py-1.5 h-12 w-32 flex-shrink-0">
                                 <button type="button" @click="if(qty > 1) qty--" class="w-8 h-8 rounded-full hover:bg-glass flex items-center justify-center text-forest text-lg font-bold" aria-label="Decrease quantity">
                                     &minus;
                                 </button>
-                                <input type="number" name="quantity" x-model="qty" min="1" max="{{ $plant->stock }}" class="w-12 text-center font-mono font-bold text-sm bg-transparent focus:outline-none" aria-label="Quantity" />
+                                <input type="number" name="quantity" x-model="qty" min="1" max="{{ $plant->stock }}" class="w-10 text-center font-mono font-bold text-sm bg-transparent focus:outline-none" aria-label="Quantity" />
                                 <button type="button" @click="if(qty < {{ $plant->stock }}) qty++" class="w-8 h-8 rounded-full hover:bg-glass flex items-center justify-center text-forest text-lg font-bold" aria-label="Increase quantity">
                                     &plus;
                                 </button>
                             </div>
 
-                            <button type="submit" class="btn btn-primary h-12 flex-grow text-sm">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <!-- Add to Cart Button -->
+                            <button type="submit" name="action" value="add_to_cart" class="btn btn-ghost border border-hairline hover:border-forest h-12 px-4 text-xs font-semibold flex-1 flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4 text-forest-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <circle cx="8" cy="21" r="1" />
                                     <circle cx="19" cy="21" r="1" />
                                     <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
                                 </svg>
-                                Add to Cart
+                                <span>Add to Cart</span>
+                            </button>
+
+                            <!-- Direct Buy Now Button -->
+                            <button type="submit" name="action" value="buy_now" class="btn btn-ochre h-12 px-5 text-xs font-semibold flex-1 flex items-center justify-center gap-2 shadow-sm">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                                </svg>
+                                <span>Buy Now &rarr;</span>
                             </button>
                         </div>
                     </form>

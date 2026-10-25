@@ -77,7 +77,7 @@
                         Experience our botanical collection in person, consult with resident horticulturists, or collect your online orders seamlessly with your pickup code.
                     </p>
                     <div class="space-y-1 text-xs text-glass/70 pt-2 font-mono">
-                        <p><strong>Address:</strong> Jl. Agrowisata Hijau No. 24, Botanical District, Jakarta Selatan</p>
+                        <p><strong>Address:</strong> Jl. Agrowisata Hijau No. 24, Botanical District, Bantul, Special Region of Yogyakarta</p>
                         <p><strong>Store Pickup Hours:</strong> Tuesday &ndash; Sunday, 08:30 &ndash; 17:00 (Closed Mondays)</p>
                     </div>
                 </div>

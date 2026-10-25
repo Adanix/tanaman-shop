@@ -39,7 +39,7 @@
             </p>
         </div>
 
-        <form method="POST" action="{{ route('checkout.store') }}" class="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-start">
+        <form method="POST" action="{{ route('checkout.store') }}" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-start">
             @csrf
 
             <!-- Left Form Area (col-span-8) -->
@@ -120,7 +120,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label for="shipping_city" class="block text-xs font-mono uppercase tracking-wider text-forest-3 mb-1 font-medium">City *</label>
-                                <input type="text" id="shipping_city" name="shipping_city" :required="fulfillment === 'delivery'" value="{{ old('shipping_city', $user->city ?? '') }}" class="w-full text-xs h-10 px-3 bg-glass border border-hairline rounded-xl text-forest focus:outline-none focus:border-ochre" placeholder="Jakarta Selatan" />
+                                <input type="text" id="shipping_city" name="shipping_city" :required="fulfillment === 'delivery'" value="{{ old('shipping_city', $user->city ?? '') }}" class="w-full text-xs h-10 px-3 bg-glass border border-hairline rounded-xl text-forest focus:outline-none focus:border-ochre" placeholder="Bantul, Special Region of Yogyakarta" />
                             </div>
                             <div>
                                 <label for="shipping_postal_code" class="block text-xs font-mono uppercase tracking-wider text-forest-3 mb-1 font-medium">Postal Code *</label>
@@ -216,9 +216,13 @@
                             </div>
                         </label>
 
-                        <!-- Bank Account Details (When Bank Transfer Selected) -->
-                        <div x-show="paymentMethod === 'bank_transfer'" x-cloak class="p-4 rounded-xl bg-glass border border-hairline space-y-3 text-xs">
-                            <span class="font-mono text-[11px] font-semibold text-forest uppercase tracking-wider block">Official Nursery Bank Accounts:</span>
+                        <!-- Bank Account Details & Proof Upload (When Bank Transfer Selected) -->
+                        <div x-show="paymentMethod === 'bank_transfer'" x-cloak class="p-4 sm:p-5 rounded-xl bg-glass border border-hairline space-y-4 text-xs">
+                            <div class="space-y-1">
+                                <span class="font-mono text-[11px] font-semibold text-forest uppercase tracking-wider block">Official Nursery Bank Accounts:</span>
+                                <p class="text-forest-3 text-[11px]">Transfer directly to our nursery bank accounts and upload proof. Verified by store staff within 2 hours.</p>
+                            </div>
+
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 @foreach($bankAccounts as $bank)
                                     <div class="p-3 bg-paper rounded-lg border border-hairline">
@@ -227,6 +231,45 @@
                                         <p class="text-forest-4 text-[11px] mt-0.5">a.n. {{ $bank->account_holder }}</p>
                                     </div>
                                 @endforeach
+                            </div>
+
+                            <!-- Direct Transfer Proof Upload Section -->
+                            <div class="pt-3 border-t border-hairline/80 space-y-3" x-data="{ proofPreview: null }">
+                                <div>
+                                    <span class="font-mono text-[11px] font-semibold text-forest uppercase tracking-wider block mb-1">
+                                        Upload Proof of Transfer (Optional Now, or via Order Tracker)
+                                    </span>
+                                    <p class="text-forest-4 text-[11px] mb-2 leading-relaxed">
+                                        You may attach your payment transfer receipt image or screenshot right now, or upload it later on your live tracking page within the 12-hour grace period.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <label for="payment_proof" class="block text-[11px] font-mono uppercase text-forest-3 mb-1">Receipt Image (JPG, PNG, WebP &bull; Max 4MB)</label>
+                                    <input type="file" 
+                                           id="payment_proof" 
+                                           name="payment_proof" 
+                                           accept="image/*,.pdf" 
+                                           @change="const f = $event.target.files[0]; proofPreview = f ? URL.createObjectURL(f) : null"
+                                           class="w-full text-xs file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-forest file:text-glass hover:file:bg-forest-2 cursor-pointer bg-paper border border-hairline rounded-xl p-1" />
+                                </div>
+
+                                <template x-if="proofPreview">
+                                    <div class="relative w-full max-h-40 rounded-xl overflow-hidden bg-paper border border-hairline flex items-center justify-center p-2">
+                                        <img :src="proofPreview" alt="Payment Proof Preview" class="max-h-36 object-contain rounded-lg shadow-sm" />
+                                    </div>
+                                </template>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                                    <div>
+                                        <label for="sender_bank_name" class="block text-[11px] font-mono uppercase text-forest-3 mb-1">Sender Bank Name</label>
+                                        <input type="text" id="sender_bank_name" name="sender_bank_name" value="{{ old('sender_bank_name') }}" placeholder="e.g. BCA / Bank Mandiri" class="w-full text-xs h-9 px-3 bg-paper border border-hairline rounded-lg text-forest focus:outline-none focus:border-ochre" />
+                                    </div>
+                                    <div>
+                                        <label for="sender_account_name" class="block text-[11px] font-mono uppercase text-forest-3 mb-1">Sender Account Holder</label>
+                                        <input type="text" id="sender_account_name" name="sender_account_name" value="{{ old('sender_account_name') }}" placeholder="e.g. Sarah Anindita" class="w-full text-xs h-9 px-3 bg-paper border border-hairline rounded-lg text-forest focus:outline-none focus:border-ochre" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

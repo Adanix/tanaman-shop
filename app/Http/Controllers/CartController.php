@@ -53,6 +53,10 @@ class CartController extends Controller
             ]);
         }
 
+        if ($request->input('action') === 'buy_now') {
+            return redirect()->route('checkout.index');
+        }
+
         return back()->with('status', 'Plant added to your cart successfully!');
     }
 

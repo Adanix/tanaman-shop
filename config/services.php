@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'ciora' => [
+        'base_url' => env('CIORA_BASE_URL', 'https://ciora.id/v1'),
+        'key' => env('CIORA_API_KEY', 'sk-i9LPTpQ9QWFw_OC_BZZnag'),
+        'model_vision' => env('CIORA_MODEL_VISION', 'ciora-vision-free'),
+        'model_text' => env('CIORA_MODEL_TEXT', 'ciora-ai-free'),
+    ],
+
 ];
