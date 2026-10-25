@@ -51,4 +51,9 @@ class Gift extends Model
             && $this->expires_at->isFuture()
             && $this->claimed_at === null;
     }
+
+    public function isClaimed(): bool
+    {
+        return $this->status === 'claimed' || $this->claimed_at !== null;
+    }
 }

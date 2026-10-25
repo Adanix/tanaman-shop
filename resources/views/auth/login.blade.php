@@ -43,6 +43,37 @@
                 </div>
             </form>
 
+            <!-- Quick Demo Access Section -->
+            <div class="mt-6 pt-6 border-t border-hairline space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-mono uppercase tracking-wider text-forest-4 font-semibold">Demo Access (One-Click)</span>
+                    <span class="text-[10px] bg-stock-wash text-stock font-mono px-2 py-0.5 rounded-full font-semibold">Instant Login</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <button type="button" 
+                            onclick="fillAndSubmit('admin@plantify.test', 'Plantify2026!')" 
+                            class="flex flex-col items-start p-3 bg-glass hover:bg-glass-dark border border-hairline rounded-xl text-left transition-colors group cursor-pointer">
+                        <span class="text-xs font-bold text-forest flex items-center justify-between w-full">
+                            <span>Sign in as Admin</span>
+                            <span class="text-[10px] text-ochre font-mono group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                        </span>
+                        <span class="text-[10px] text-forest-3 font-mono truncate mt-0.5">admin@plantify.test</span>
+                        <span class="text-[10px] text-forest-4 mt-1">POS Pickup, Orders &amp; Settings</span>
+                    </button>
+
+                    <button type="button" 
+                            onclick="fillAndSubmit('customer@plantify.test', 'Plantify2026!')" 
+                            class="flex flex-col items-start p-3 bg-glass hover:bg-glass-dark border border-hairline rounded-xl text-left transition-colors group cursor-pointer">
+                        <span class="text-xs font-bold text-forest flex items-center justify-between w-full">
+                            <span>Sign in as Customer</span>
+                            <span class="text-[10px] text-ochre font-mono group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                        </span>
+                        <span class="text-[10px] text-forest-3 font-mono truncate mt-0.5">customer@plantify.test</span>
+                        <span class="text-[10px] text-forest-4 mt-1">Digital Garden &amp; AI Care</span>
+                    </button>
+                </div>
+            </div>
+
             <div class="mt-6 pt-4 border-t border-hairline text-center text-xs text-forest-3">
                 <span>Don't have an account yet?</span>
                 <a href="{{ route('register') }}" class="text-ochre hover:underline font-semibold ml-1">Create one now</a>
@@ -51,4 +82,11 @@
 
     </div>
 
+    <script>
+        function fillAndSubmit(email, password) {
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = password;
+            document.getElementById('email').form.submit();
+        }
+    </script>
 @endsection

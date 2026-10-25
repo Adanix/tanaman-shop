@@ -73,7 +73,7 @@ class OrderTrackingController extends Controller
             return redirect()->route('login')->with('error', 'Please log in or create an account to adopt these plants to your Digital Garden.');
         }
 
-        if (!$user->hasVerifiedEmail()) {
+        if (!config('app.demo_mode') && !$user->hasVerifiedEmail()) {
             return redirect()->route('verification.notice')->with('error', 'Please verify your email address before adopting plants into your Digital Garden.');
         }
 

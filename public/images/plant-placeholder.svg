@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+    <rect width="600" height="600" fill="#edf1ea"/>
+    <g transform="translate(180, 150)">
+        <!-- Subtle background circle -->
+        <circle cx="120" cy="120" r="110" fill="#dfe7da" opacity="0.6"/>
+        
+        <!-- Botanical Leaf Icon -->
+        <path d="M120 220 C120 160 80 100 120 30 C160 100 200 160 120 220 Z" fill="#283e30" opacity="0.85"/>
+        <path d="M120 50 L120 220" stroke="#c9861f" stroke-width="4" stroke-linecap="round"/>
+        <path d="M120 110 Q145 95 160 90" stroke="#c9861f" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M120 140 Q95 125 80 120" stroke="#c9861f" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M120 170 Q145 155 160 150" stroke="#c9861f" stroke-width="3" stroke-linecap="round" fill="none"/>
+    </g>
+    <text x="300" y="440" font-family="'Epilogue', sans-serif" font-weight="700" font-size="22" fill="#14251a" text-anchor="middle" letter-spacing="1">PLANTIFY BOTANICAL</text>
+    <text x="300" y="470" font-family="'Sometype Mono', monospace" font-size="13" fill="#526759" text-anchor="middle" letter-spacing="2">SPECIMEN PREVIEW</text>
+</svg>

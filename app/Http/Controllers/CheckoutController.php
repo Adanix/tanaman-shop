@@ -75,6 +75,19 @@ class CheckoutController extends Controller
 
             // Handle online Stripe Checkout
             if ($order->payment_method === 'online_stripe') {
+                if (config('app.demo_mode')) {
+                    // Demo mode bypass: automatically mark order as paid & processing
+                    $order->update([
+                        'payment_status' => 'paid',
+                        'order_status' => 'processing',
+                    ]);
+                    if ($order->is_gift && $order->gift) {
+                        $order->gift->update(['status' => 'claimable']);
+                    }
+                    return redirect()->route('order.success', ['token' => $order->tracking_token])
+                        ->with('status', 'Demo Mode: Payment completed automatically without card charge.');
+                }
+
                 $session = $this->stripeService->createCheckoutSession(
                     $order,
                     route('order.success', ['token' => $order->tracking_token]),
@@ -107,6 +120,18 @@ class CheckoutController extends Controller
 
         if ($order->isPaid() || $order->isCancelled()) {
             return redirect()->route('order.track', ['token' => $token]);
+        }
+
+        if (config('app.demo_mode')) {
+            $order->update([
+                'payment_status' => 'paid',
+                'order_status' => 'processing',
+            ]);
+            if ($order->is_gift && $order->gift) {
+                $order->gift->update(['status' => 'claimable']);
+            }
+            return redirect()->route('order.success', ['token' => $order->tracking_token])
+                ->with('status', 'Demo Mode: Payment completed automatically.');
         }
 
         try {

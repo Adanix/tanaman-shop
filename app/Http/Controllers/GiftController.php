@@ -34,7 +34,7 @@ class GiftController extends Controller
             return redirect()->route('login')->with('status', 'Please sign in or register with your email (' . $gift->recipient_email . ') to claim your plant gift.');
         }
 
-        if (!$user->hasVerifiedEmail()) {
+        if (!config('app.demo_mode') && !$user->hasVerifiedEmail()) {
             return redirect()->route('verification.notice')->with('error', 'Please verify your email address before claiming this plant gift.');
         }
 

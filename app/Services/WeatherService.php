@@ -85,8 +85,18 @@ class WeatherService
     protected function fetchFromProvider(string $city): ?array
     {
         $apiKey = config('services.openweather.key') ?? env('OPENWEATHER_API_KEY');
-        if (!$apiKey) {
-            return null;
+
+        // Demo Mode / Fallback Mock Weather
+        if (config('app.demo_mode') || !$apiKey) {
+            return [
+                'weather' => [
+                    ['main' => 'Clear', 'description' => 'clear sky with mild botanical breeze']
+                ],
+                'main' => [
+                    'temp' => 26.5,
+                    'humidity' => 64,
+                ],
+            ];
         }
 
         try {

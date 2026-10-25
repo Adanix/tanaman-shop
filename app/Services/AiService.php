@@ -101,6 +101,38 @@ class AiService
         $log = AiUsageLog::where('request_uuid', $diagnosisRecord->id)->first() ??
             AiUsageLog::where('user_id', $diagnosisRecord->user_id)->where('status', 'queued')->latest()->first();
 
+        // Demo Mode / Fallback Mock Diagnosis
+        if (config('app.demo_mode') || empty($this->apiKey)) {
+            $recIds = Plant::where('is_active', true)->where('stock', '>', 0)->take(3)->pluck('id')->toArray();
+            $demoDiagnosis = [
+                'diagnosis' => 'Early Chlorosis & Moisture Imbalance (Monstera / Araceae Foliage)',
+                'severity' => 'mild',
+                'cause' => 'Slight root saturation due to high potting density combined with lower ambient indirect light.',
+                'rescue_steps' => [
+                    'Allow the top 2 to 3 inches of potting medium to dry thoroughly before hydrating again.',
+                    'Relocate specimen 3 feet nearer to an east or south-facing window with diffused canopy sunlight.',
+                    'Aerate soil gently using a sanitized bamboo skewer to restore capillary root respiration.',
+                    'Mist leaves during morning hours only if indoor relative humidity drops below 50%.'
+                ],
+                'recommended_plant_ids' => $recIds,
+            ];
+
+            $diagnosisRecord->update([
+                'status' => 'completed',
+                'diagnosis' => $demoDiagnosis['diagnosis'],
+                'severity' => $demoDiagnosis['severity'],
+                'ai_response' => $demoDiagnosis,
+                'recommended_plant_ids' => $demoDiagnosis['recommended_plant_ids'],
+                'model' => 'demo-botanical-vision',
+            ]);
+
+            if ($log) {
+                $log->update(['status' => 'completed', 'latency_ms' => 320]);
+            }
+
+            return $demoDiagnosis;
+        }
+
         $startTime = microtime(true);
 
         // Fetch candidate active products for cross-selling verification
@@ -198,6 +230,44 @@ class AiService
     public function chatWithBot(User $user, string $message, ?Plant $plant = null): string
     {
         $log = $this->reserveQuota($user, 'care_chat');
+
+        // Demo Mode / Fallback Mock Chatbot
+        if (config('app.demo_mode') || empty($this->apiKey)) {
+            $lower = strtolower($message);
+            $plantName = $plant ? $plant->name : 'your houseplant';
+            if (str_contains($lower, 'water') || str_contains($lower, 'wet') || str_contains($lower, 'dry')) {
+                $reply = "For {$plantName}, check the top 2 inches of soil before adding water. Only irrigate when the soil feels crumbly and dry to the touch. Ensure excess water drains freely through bottom drainage holes.";
+            } elseif (str_contains($lower, 'light') || str_contains($lower, 'sun')) {
+                $reply = "{$plantName} thrives best in bright, indirect sunlight. Avoid placing it in harsh afternoon direct sun, which can scorch the leaves, while keeping it out of completely dark corners.";
+            } elseif (str_contains($lower, 'fertiliz') || str_contains($lower, 'feed')) {
+                $reply = "Feed {$plantName} with a balanced liquid organic plant food diluted to half strength once a month during spring and summer. Withhold fertilizer during autumn and winter dormancy.";
+            } elseif (str_contains($lower, 'yellow') || str_contains($lower, 'brown') || str_contains($lower, 'dying') || str_contains($lower, 'leaf') || str_contains($lower, 'leaves')) {
+                $reply = "Yellowing leaves typically indicate overwatering or root moisture stress. Allow the soil mix to dry out significantly, prune fully brown leaves with sterile shears, and inspect drainage.";
+            } else {
+                $reply = "Hello! I am your Plantify Botanical Assistant. For {$plantName}, maintaining regular watering intervals, steady temperatures between 18 to 26 degrees Celsius, and filtered natural light will ensure lush, vibrant growth.";
+            }
+
+            AiChat::create([
+                'user_id' => $user->id,
+                'plant_id' => $plant?->id,
+                'role' => 'user',
+                'message' => $message,
+                'request_uuid' => $log->request_uuid,
+            ]);
+
+            AiChat::create([
+                'user_id' => $user->id,
+                'plant_id' => $plant?->id,
+                'role' => 'assistant',
+                'message' => $reply,
+                'request_uuid' => $log->request_uuid,
+            ]);
+
+            $log->update(['status' => 'completed', 'latency_ms' => 150]);
+
+            return $reply;
+        }
+
         $startTime = microtime(true);
 
         // Build context from plant if present

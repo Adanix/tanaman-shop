@@ -33,7 +33,7 @@ class AiController extends Controller
     public function diagnose(Request $request): JsonResponse|RedirectResponse
     {
         $user = Auth::user();
-        if (!$user || !$user->hasVerifiedEmail()) {
+        if (!$user || (!config('app.demo_mode') && !$user->hasVerifiedEmail())) {
             return response()->json([
                 'error' => 'Please verify your email address to access AI Plant Doctor diagnosis.',
             ], 403);
@@ -74,7 +74,7 @@ class AiController extends Controller
     public function chat(Request $request): JsonResponse
     {
         $user = Auth::user();
-        if (!$user || !$user->hasVerifiedEmail()) {
+        if (!$user || (!config('app.demo_mode') && !$user->hasVerifiedEmail())) {
             return response()->json([
                 'error' => 'Please verify your email address to use the care assistant chatbot.',
             ], 403);

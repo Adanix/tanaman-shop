@@ -76,4 +76,45 @@ class Plant extends Model
     {
         return $this->stock > 0 && $this->stock <= $this->low_stock_threshold;
     }
+
+    public function getBotanicalNameAttribute(): ?string
+    {
+        return $this->scientific_name;
+    }
+
+    public function getPrimaryImageUrlAttribute(): string
+    {
+        if (!empty($this->image_path)) {
+            if (str_starts_with($this->image_path, 'http://') || str_starts_with($this->image_path, 'https://')) {
+                return $this->image_path;
+            }
+            return asset('storage/' . ltrim($this->image_path, '/'));
+        }
+
+        $firstImage = $this->images->first();
+        if ($firstImage && !empty($firstImage->image_path)) {
+            if (str_starts_with($firstImage->image_path, 'http://') || str_starts_with($firstImage->image_path, 'https://')) {
+                return $firstImage->image_path;
+            }
+            return asset('storage/' . ltrim($firstImage->image_path, '/'));
+        }
+
+        return asset('images/plant-placeholder.svg');
+    }
+
+    public function getWateringFrequencyDaysAttribute(): int
+    {
+        return (int) $this->water_interval_days;
+    }
+
+    public function getHumidityRequirementAttribute(): string
+    {
+        return match ($this->light_requirement) {
+            'low' => 'High',
+            'medium' => 'Moderate',
+            'bright_indirect' => 'Moderate',
+            'direct_sun' => 'Low',
+            default => 'Moderate',
+        };
+    }
 }

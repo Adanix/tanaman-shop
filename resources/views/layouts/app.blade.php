@@ -32,165 +32,193 @@
         </div>
     </div>
 
-    <!-- 2. Sticky Glasshouse Header -->
-    <header class="sticky top-0 z-50 bg-glass/95 backdrop-blur-md border-b border-hairline transition-all">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-4">
-            
-            <!-- Logo / Brand -->
-            <a href="{{ route('home') }}" class="flex items-center gap-3 flex-shrink-0 group focus:outline-none" aria-label="Plantify Official — Home">
-                <span class="w-10 h-10 rounded-xl bg-forest flex items-center justify-center text-ochre shadow-sm group-hover:scale-105 transition-transform">
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 21V9" />
-                        <path d="M12 13c0-3.3 2.7-6 6-6 0 3.3-2.7 6-6 6Z" />
-                        <path d="M12 16c0-2.8-2.2-5-5-5 0 2.8 2.2 5 5 5Z" />
-                    </svg>
-                </span>
-                <span class="font-display font-extrabold text-xl sm:text-2xl tracking-tight text-forest group-hover:text-forest-2">
-                    Plantify<span class="text-ochre">.</span>
-                </span>
-            </a>
-
-            <!-- Desktop Navigation Links -->
-            <nav class="hidden lg:flex items-center gap-6 xl:gap-8" aria-label="Main Navigation">
-                <a href="{{ route('home') }}" class="text-sm font-medium transition-colors hover:text-ochre {{ request()->routeIs('home') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
-                    Home
-                </a>
-                <a href="{{ route('shop') }}" class="text-sm font-medium transition-colors hover:text-ochre {{ request()->routeIs('shop*') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
-                    Shop Plants
-                </a>
-                <a href="{{ route('garden.index') }}" class="text-sm font-medium transition-colors hover:text-ochre flex items-center gap-1.5 {{ request()->routeIs('garden*') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
-                    <span class="w-2 h-2 rounded-full bg-stock animate-pulse"></span>
-                    My Digital Garden
-                </a>
-                <a href="{{ route('care.index') }}" class="text-sm font-medium transition-colors hover:text-ochre {{ request()->routeIs('care*') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
-                    AI Doctor &amp; Care
-                </a>
-                <a href="{{ route('order.track.search') }}" class="text-sm font-medium transition-colors hover:text-ochre {{ request()->routeIs('order.track*') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
-                    Track Order
-                </a>
-                <a href="{{ route('about') }}" class="text-sm font-medium transition-colors hover:text-ochre {{ request()->routeIs('about') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
-                    About Nursery
-                </a>
-            </nav>
-
-            <!-- User Actions & Cart -->
-            <div class="flex items-center gap-2 sm:gap-4">
+    <div x-data="{ mobileOpen: false }">
+        <!-- 2. Sticky Glasshouse Header -->
+        <header class="sticky top-0 z-40 bg-glass/95 backdrop-blur-md border-b border-hairline transition-all">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-4">
                 
-                <!-- User Account Dropdown / Auth Links -->
-                @auth
-                    <div class="relative group" x-data="{ open: false }" @click.outside="open = false">
-                        <button type="button" @click="open = !open" class="flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-full bg-paper border border-hairline hover:border-ochre text-forest transition-colors">
-                            <svg class="w-4 h-4 text-forest-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="7" r="4" />
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                            </svg>
-                            <span class="max-w-[100px] truncate hidden sm:inline">{{ Auth::user()->name }}</span>
-                            <svg class="w-3 h-3 text-forest-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="m6 9 6 6 6-6" />
+                <!-- Logo / Brand -->
+                <a href="{{ route('home') }}" class="flex items-center gap-3 flex-shrink-0 group focus:outline-none" aria-label="Plantify Official — Home">
+                    <span class="w-10 h-10 rounded-xl bg-forest flex items-center justify-center text-ochre shadow-sm group-hover:scale-105 transition-transform">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 21V9" />
+                            <path d="M12 13c0-3.3 2.7-6 6-6 0 3.3-2.7 6-6 6Z" />
+                            <path d="M12 16c0-2.8-2.2-5-5-5 0 2.8 2.2 5 5 5Z" />
+                        </svg>
+                    </span>
+                    <span class="font-display font-extrabold text-xl sm:text-2xl tracking-tight text-forest group-hover:text-forest-2">
+                        Plantify<span class="text-ochre">.</span>
+                    </span>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex items-center gap-6 xl:gap-8" aria-label="Main Navigation">
+                    <a href="{{ route('home') }}" class="text-sm font-medium transition-colors hover:text-ochre {{ request()->routeIs('home') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
+                        Home
+                    </a>
+                    <a href="{{ route('shop') }}" class="text-sm font-medium transition-colors hover:text-ochre {{ request()->routeIs('shop*') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
+                        Shop Plants
+                    </a>
+                    <a href="{{ route('garden.index') }}" class="text-sm font-medium transition-colors hover:text-ochre flex items-center gap-1.5 {{ request()->routeIs('garden*') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
+                        <span class="w-2 h-2 rounded-full bg-stock animate-pulse"></span>
+                        My Digital Garden
+                    </a>
+                    <a href="{{ route('care.index') }}" class="text-sm font-medium transition-colors hover:text-ochre {{ request()->routeIs('care*') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
+                        AI Doctor &amp; Care
+                    </a>
+                    <a href="{{ route('order.track.search') }}" class="text-sm font-medium transition-colors hover:text-ochre {{ request()->routeIs('order.track*') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
+                        Track Order
+                    </a>
+                    <a href="{{ route('about') }}" class="text-sm font-medium transition-colors hover:text-ochre {{ request()->routeIs('about') ? 'text-forest font-bold border-b-2 border-ochre pb-1' : 'text-forest-2' }}">
+                        About Nursery
+                    </a>
+                </nav>
+
+                <!-- User Actions & Cart -->
+                <div class="flex items-center gap-2 sm:gap-4">
+                    
+                    <!-- User Account Dropdown / Auth Links -->
+                    @auth
+                        <div class="relative" x-data="{ open: false }" @click.outside="open = false">
+                            <button type="button" @click="open = !open" class="flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-full bg-paper border border-hairline hover:border-ochre text-forest transition-colors">
+                                <svg class="w-4 h-4 text-forest-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="7" r="4" />
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                </svg>
+                                <span class="max-w-[100px] truncate hidden sm:inline">{{ Auth::user()->name }}</span>
+                                <svg class="w-3 h-3 text-forest-4 transition-transform duration-200" :class="{ 'rotate-180': open }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="m6 9 6 6 6-6" />
+                                </svg>
+                            </button>
+
+                            <div x-show="open" 
+                                 x-cloak 
+                                 x-transition:enter="transition ease-out duration-150" 
+                                 x-transition:enter-start="opacity-0 translate-y-1 scale-95" 
+                                 x-transition:enter-end="opacity-100 translate-y-0 scale-100" 
+                                 x-transition:leave="transition ease-in duration-100" 
+                                 x-transition:leave-start="opacity-100 translate-y-0 scale-100" 
+                                 x-transition:leave-end="opacity-0 translate-y-1 scale-95" 
+                                 class="absolute right-0 mt-2 w-52 bg-paper rounded-xl shadow-xl border border-hairline py-1 z-50 text-xs origin-top-right">
+                                <div class="px-4 py-2 border-b border-hairline text-forest-4">
+                                    Signed in as <strong class="text-forest block truncate">{{ Auth::user()->email }}</strong>
+                                </div>
+                                <a href="{{ route('garden.index') }}" class="block px-4 py-2 text-forest-2 hover:bg-glass hover:text-forest">
+                                    My Digital Garden
+                                </a>
+                                @if(Auth::user()->isAdmin())
+                                    <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-ochre font-semibold hover:bg-glass">
+                                        Admin Console
+                                    </a>
+                                @endif
+                                <form method="POST" action="{{ route('logout') }}" class="border-t border-hairline mt-1">
+                                    @csrf
+                                    <button type="submit" class="w-full text-left px-4 py-2 text-sale hover:bg-sale-wash transition-colors">
+                                        Sign Out
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    @else
+                        <a href="{{ route('login') }}" class="text-xs font-semibold px-3 py-1.5 rounded-full text-forest-2 hover:text-forest transition-colors">
+                            Sign In
+                        </a>
+                        <a href="{{ route('register') }}" class="hidden sm:inline-flex text-xs font-semibold px-3.5 py-1.5 rounded-full bg-forest text-glass hover:bg-forest-2 transition-colors">
+                            Register
+                        </a>
+                    @endauth
+
+                    <!-- Cart Button -->
+                    <a href="{{ route('cart.index') }}" class="relative btn-icon bg-paper border border-hairline hover:border-ochre" aria-label="Shopping Cart">
+                        <svg class="w-5 h-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="8" cy="21" r="1" />
+                            <circle cx="19" cy="21" r="1" />
+                            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+                        </svg>
+                        @if(($globalCartCount ?? 0) > 0)
+                            <span class="absolute -top-1 -right-1 bg-ochre text-white text-[10px] font-mono font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">
+                                {{ $globalCartCount }}
+                            </span>
+                        @endif
+                    </a>
+
+                    <!-- Mobile Menu Button -->
+                    <div class="lg:hidden">
+                        <button type="button" @click="mobileOpen = !mobileOpen" class="btn-icon bg-paper border border-hairline" aria-label="Toggle Navigation">
+                            <svg class="w-5 h-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="3" y1="12" x2="21" y2="12" />
+                                <line x1="3" y1="6" x2="21" y2="6" />
+                                <line x1="3" y1="18" x2="21" y2="18" />
                             </svg>
                         </button>
-
-                        <div x-show="open" x-cloak class="absolute right-0 mt-2 w-48 bg-paper rounded-xl shadow-xl border border-hairline py-1 z-50 text-xs">
-                            <div class="px-4 py-2 border-b border-hairline text-forest-4">
-                                Signed in as <strong class="text-forest block truncate">{{ Auth::user()->email }}</strong>
-                            </div>
-                            <a href="{{ route('garden.index') }}" class="block px-4 py-2 text-forest-2 hover:bg-glass hover:text-forest">
-                                My Digital Garden
-                            </a>
-                            @if(Auth::user()->isAdmin())
-                                <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-ochre font-semibold hover:bg-glass">
-                                    Admin Console
-                                </a>
-                            @endif
-                            <form method="POST" action="{{ route('logout') }}" class="border-t border-hairline mt-1">
-                                @csrf
-                                <button type="submit" class="w-full text-left px-4 py-2 text-sale hover:bg-sale-wash transition-colors">
-                                    Sign Out
-                                </button>
-                            </form>
-                        </div>
                     </div>
-                @else
-                    <a href="{{ route('login') }}" class="text-xs font-semibold px-3 py-1.5 rounded-full text-forest-2 hover:text-forest transition-colors">
-                        Sign In
-                    </a>
-                    <a href="{{ route('register') }}" class="hidden sm:inline-flex text-xs font-semibold px-3.5 py-1.5 rounded-full bg-forest text-glass hover:bg-forest-2 transition-colors">
-                        Register
-                    </a>
-                @endauth
 
-                <!-- Cart Button -->
-                <a href="{{ route('cart.index') }}" class="relative btn-icon bg-paper border border-hairline hover:border-ochre" aria-label="Shopping Cart">
-                    <svg class="w-5 h-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="8" cy="21" r="1" />
-                        <circle cx="19" cy="21" r="1" />
-                        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
-                    </svg>
-                    @if(($globalCartCount ?? 0) > 0)
-                        <span class="absolute -top-1 -right-1 bg-ochre text-white text-[10px] font-mono font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">
-                            {{ $globalCartCount }}
-                        </span>
-                    @endif
-                </a>
+                </div>
+            </div>
+        </header>
 
-                <!-- Mobile Menu Button -->
-                <div class="lg:hidden" x-data="{ mobileOpen: false }">
-                    <button type="button" @click="mobileOpen = !mobileOpen" class="btn-icon bg-paper border border-hairline" aria-label="Toggle Navigation">
-                        <svg class="w-5 h-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="3" y1="12" x2="21" y2="12" />
-                            <line x1="3" y1="6" x2="21" y2="6" />
-                            <line x1="3" y1="18" x2="21" y2="18" />
+        <!-- Mobile Navigation Drawer (Rendered outside header to avoid backdrop-filter trapping) -->
+        <div x-show="mobileOpen" 
+             x-cloak 
+             class="fixed inset-0 z-50 bg-forest/50 backdrop-blur-sm lg:hidden" 
+             @click="mobileOpen = false"
+             x-transition:enter="transition-opacity ease-linear duration-200"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition-opacity ease-linear duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"></div>
+
+        <div x-show="mobileOpen" 
+             x-cloak 
+             class="fixed top-0 right-0 bottom-0 w-72 max-w-[85vw] bg-paper z-50 p-6 shadow-2xl flex flex-col justify-between overflow-y-auto lg:hidden"
+             x-transition:enter="transition ease-out duration-300 transform"
+             x-transition:enter-start="translate-x-full"
+             x-transition:enter-end="translate-x-0"
+             x-transition:leave="transition ease-in duration-200 transform"
+             x-transition:leave-start="translate-x-0"
+             x-transition:leave-end="translate-x-full">
+            <div class="space-y-4">
+                <div class="flex items-center justify-between pb-4 border-b border-hairline">
+                    <span class="font-display font-bold text-lg text-forest">Menu</span>
+                    <button type="button" @click="mobileOpen = false" class="p-1 text-forest-3 hover:text-forest">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
                         </svg>
                     </button>
-
-                    <!-- Mobile Navigation Drawer -->
-                    <div x-show="mobileOpen" x-cloak class="fixed inset-0 z-50 bg-forest/50 backdrop-blur-sm" @click="mobileOpen = false"></div>
-                    <div x-show="mobileOpen" x-cloak class="fixed top-0 right-0 bottom-0 w-72 bg-paper z-50 p-6 shadow-2xl flex flex-col justify-between overflow-y-auto">
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between pb-4 border-b border-hairline">
-                                <span class="font-display font-bold text-lg text-forest">Menu</span>
-                                <button type="button" @click="mobileOpen = false" class="p-1 text-forest-3 hover:text-forest">
-                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <line x1="18" y1="6" x2="6" y2="18" />
-                                        <line x1="6" y1="6" x2="18" y2="18" />
-                                    </svg>
-                                </button>
-                            </div>
-
-                            <nav class="flex flex-col space-y-3 text-sm font-medium">
-                                <a href="{{ route('home') }}" class="py-2 text-forest-2 hover:text-ochre">Home</a>
-                                <a href="{{ route('shop') }}" class="py-2 text-forest-2 hover:text-ochre">Shop Plants</a>
-                                <a href="{{ route('garden.index') }}" class="py-2 text-forest-2 hover:text-ochre flex items-center justify-between">
-                                    <span>My Digital Garden</span>
-                                    <span class="w-2 h-2 rounded-full bg-stock"></span>
-                                </a>
-                                <a href="{{ route('care.index') }}" class="py-2 text-forest-2 hover:text-ochre">AI Doctor &amp; Care</a>
-                                <a href="{{ route('order.track.search') }}" class="py-2 text-forest-2 hover:text-ochre">Track Order</a>
-                                <a href="{{ route('about') }}" class="py-2 text-forest-2 hover:text-ochre">About Nursery</a>
-                            </nav>
-                        </div>
-
-                        <div class="pt-6 border-t border-hairline space-y-2">
-                            @auth
-                                <div class="text-xs text-forest-4 mb-2 truncate">Signed in: <strong>{{ Auth::user()->name }}</strong></div>
-                                @if(Auth::user()->isAdmin())
-                                    <a href="{{ route('admin.dashboard') }}" class="btn btn-primary w-full text-xs">Admin Console</a>
-                                @endif
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="btn btn-ghost w-full text-xs text-sale">Sign Out</button>
-                                </form>
-                            @else
-                                <a href="{{ route('login') }}" class="btn btn-ghost w-full text-xs">Sign In</a>
-                                <a href="{{ route('register') }}" class="btn btn-primary w-full text-xs">Register</a>
-                            @endauth
-                        </div>
-                    </div>
                 </div>
 
+                <nav class="flex flex-col space-y-3 text-sm font-medium">
+                    <a href="{{ route('home') }}" class="py-2 text-forest-2 hover:text-ochre">Home</a>
+                    <a href="{{ route('shop') }}" class="py-2 text-forest-2 hover:text-ochre">Shop Plants</a>
+                    <a href="{{ route('garden.index') }}" class="py-2 text-forest-2 hover:text-ochre flex items-center justify-between">
+                        <span>My Digital Garden</span>
+                        <span class="w-2 h-2 rounded-full bg-stock"></span>
+                    </a>
+                    <a href="{{ route('care.index') }}" class="py-2 text-forest-2 hover:text-ochre">AI Doctor &amp; Care</a>
+                    <a href="{{ route('order.track.search') }}" class="py-2 text-forest-2 hover:text-ochre">Track Order</a>
+                    <a href="{{ route('about') }}" class="py-2 text-forest-2 hover:text-ochre">About Nursery</a>
+                </nav>
+            </div>
+
+            <div class="pt-6 border-t border-hairline space-y-2">
+                @auth
+                    <div class="text-xs text-forest-4 mb-2 truncate">Signed in: <strong>{{ Auth::user()->name }}</strong></div>
+                    @if(Auth::user()->isAdmin())
+                        <a href="{{ route('admin.dashboard') }}" class="btn btn-primary w-full text-xs">Admin Console</a>
+                    @endif
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-ghost w-full text-xs text-sale">Sign Out</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-ghost w-full text-xs">Sign In</a>
+                    <a href="{{ route('register') }}" class="btn btn-primary w-full text-xs">Register</a>
+                @endauth
             </div>
         </div>
-    </header>
+    </div>
 
     <!-- Global Alert Banners -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">

@@ -26,6 +26,11 @@
     --font-mono: 'Sometype Mono', ui-monospace, 'SF Mono', monospace;
 }
 
+/* Alpine.js Cloak to prevent FOUC / stuck dropdowns */
+[x-cloak] {
+    display: none !important;
+}
+
 /* Custom Base & Utilities */
 html {
     -webkit-text-size-adjust: 100%;
