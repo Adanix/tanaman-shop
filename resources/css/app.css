@@ -1,9 +1,239 @@
 @import 'tailwindcss';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --color-glass: #edf1ea;
+    --color-glass-dark: #e1e9dc;
+    --color-paper: #fbfcfa;
+    --color-forest: #14251a;
+    --color-forest-dark: #0b150f;
+    --color-forest-2: #283e30;
+    --color-forest-3: #526759;
+    --color-forest-4: #829588;
+    --color-hairline: #cfdac9;
+    --color-hairline-soft: #dfe7da;
+    --color-ochre: #c9861f;
+    --color-ochre-deep: #a66c12;
+    --color-ochre-wash: rgba(201, 134, 31, 0.12);
+    --color-sale: #b4462b;
+    --color-sale-wash: rgba(180, 70, 43, 0.10);
+    --color-stock: #3d6b4a;
+    --color-stock-wash: rgba(61, 107, 74, 0.12);
+    --color-low: #a8720d;
+    --color-low-wash: rgba(168, 114, 13, 0.12);
+
+    --font-display: 'Epilogue', ui-sans-serif, system-ui, sans-serif;
+    --font-sans: 'Be Vietnam Pro', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'Sometype Mono', ui-monospace, 'SF Mono', monospace;
+}
+
+/* Custom Base & Utilities */
+html {
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+}
+
+body {
+    background-color: var(--color-glass);
+    color: var(--color-forest);
+    font-family: var(--font-sans);
+    overflow-x: clip;
+}
+
+/* Smooth Scrollbar-hide for Horizontal Rail */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Base button styles with strict touch-friendly sizing */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    border-radius: 9999px;
+    padding: 0.625rem 1.25rem;
+    min-height: 44px;
+    transition: all 180ms cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: pointer;
+    text-decoration: none;
+}
+.btn:focus-visible {
+    outline: 2px solid var(--color-ochre);
+    outline-offset: 2px;
+}
+
+.btn-primary {
+    background-color: var(--color-forest);
+    color: var(--color-glass);
+}
+.btn-primary:hover {
+    background-color: var(--color-forest-2);
+    transform: translateY(-1px);
+}
+
+.btn-ochre {
+    background-color: var(--color-ochre);
+    color: #ffffff;
+}
+.btn-ochre:hover {
+    background-color: var(--color-ochre-deep);
+    transform: translateY(-1px);
+}
+
+.btn-ghost {
+    background-color: transparent;
+    color: var(--color-forest);
+    border: 1px solid var(--color-hairline);
+}
+.btn-ghost:hover {
+    border-color: var(--color-forest-3);
+    background-color: rgba(20, 37, 26, 0.04);
+}
+
+.btn-icon {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 9999px;
+    display: inline-grid;
+    place-content: center;
+    color: var(--color-forest-2);
+    transition: color 140ms ease, background 140ms ease;
+}
+.btn-icon:hover {
+    color: var(--color-forest);
+    background-color: rgba(20, 37, 26, 0.06);
+}
+
+/* Badge styles */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.2rem 0.625rem;
+    border-radius: 9999px;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.badge-sale {
+    background-color: var(--color-sale-wash);
+    color: var(--color-sale);
+}
+.badge-stock {
+    background-color: var(--color-stock-wash);
+    color: var(--color-stock);
+}
+.badge-low {
+    background-color: var(--color-low-wash);
+    color: var(--color-low);
+}
+.badge-new {
+    background-color: var(--color-ochre-wash);
+    color: var(--color-ochre-deep);
+}
+
+/* Chip filter styles */
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 36px;
+    padding: 0 0.875rem;
+    border: 1px solid var(--color-hairline);
+    border-radius: 9999px;
+    background-color: var(--color-paper);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-forest-2);
+    cursor: pointer;
+    transition: all 140ms ease;
+}
+.chip:hover {
+    border-color: var(--color-ochre);
+}
+.chip[aria-pressed="true"] {
+    background-color: var(--color-forest);
+    color: var(--color-glass);
+    border-color: var(--color-forest);
+}
+
+/* Scrim & Drawer */
+.scrim {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 21, 15, 0.45);
+    backdrop-filter: blur(4px);
+    z-index: 60;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.scrim[data-open="true"] {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(440px, 92vw);
+    background: var(--color-paper);
+    border-left: 1px solid var(--color-hairline);
+    z-index: 70;
+    transform: translateX(105%);
+    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 50px -12px rgba(20, 37, 26, 0.25);
+}
+.drawer[data-open="true"] {
+    transform: translateX(0);
+}
+
+/* Toasts */
+.toasts {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    pointer-events: none;
+}
+.toast {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--color-forest);
+    color: var(--color-glass);
+    border-radius: 9999px;
+    box-shadow: 0 10px 25px -5px rgba(20, 37, 26, 0.3);
+    font-size: 0.875rem;
+    pointer-events: auto;
+    animation: toast-in 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
