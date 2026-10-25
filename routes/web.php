@@ -32,6 +32,21 @@ Route::get('/shop', [CatalogController::class, 'shop'])->name('shop');
 Route::get('/product/{slug?}', [CatalogController::class, 'product'])->name('product.show');
 Route::get('/about', [CatalogController::class, 'about'])->name('about');
 
+// Web App Proposal PDF (Direct Inline Browser Viewer & Download)
+Route::get('/proposal-pdf', function () {
+    $path = public_path('PROPOSAL_PENGEMBANGAN_PLANTIFY.pdf');
+    if (!file_exists($path)) {
+        abort(404, 'Proposal document not found.');
+    }
+    return response()->file($path, [
+        'Content-Type' => 'application/pdf',
+        'Content-Disposition' => 'inline; filename="Plantify-Official-Web-App-Proposal.pdf"',
+        'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0, post-check=0, pre-check=0',
+        'Pragma' => 'no-cache',
+        'Expires' => '0',
+    ]);
+})->name('proposal.pdf');
+
 // ==========================================
 // 2. SHOPPING CART ROUTES (Session + Member Sync)
 // ==========================================
