@@ -1,5 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AiController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\GardenController;
+use App\Http\Controllers\GiftController;
+use App\Http\Controllers\OrderTrackingController;
+use App\Http\Controllers\StripeWebhookController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -7,42 +19,127 @@ use Illuminate\Support\Facades\Route;
 | Web Routes — Plantify Official Marketplace & Management
 |--------------------------------------------------------------------------
 |
-| Routing untuk halaman etalase marketplace, detail produk, keranjang,
-| fitur kebun virtual (My Digital Garden), panduan rawat & AI, serta profil nursery.
+| PRD v2.1 compliant routes for storefront, cart, checkout, order tracking,
+| digital garden, AI care doctor & chatbot, auth, gifts, and admin back-office.
 |
 */
 
-// Beranda (Shop-First Category Rail, Featured Plants, USP Innovations)
-Route::get('/', function () {
-    return view('pages.home');
-})->name('home');
+// ==========================================
+// 1. PUBLIC STOREFRONT & CATALOG ROUTES
+// ==========================================
+Route::get('/', [CatalogController::class, 'home'])->name('home');
+Route::get('/shop', [CatalogController::class, 'shop'])->name('shop');
+Route::get('/product/{slug?}', [CatalogController::class, 'product'])->name('product.show');
+Route::get('/about', [CatalogController::class, 'about'])->name('about');
 
-// Katalog Tanaman (Filter Cahaya, Ruangan, Ukuran, Kesulitan, Live Count)
-Route::get('/shop', function () {
-    return view('pages.shop');
-})->name('shop');
+// ==========================================
+// 2. SHOPPING CART ROUTES (Session + Member Sync)
+// ==========================================
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 
-// Detail Tanaman (Galeri Interaktif, Varian Pot, Parameter Perawatan, Accordion)
-Route::get('/product/{slug?}', function ($slug = 'monstera-deliciosa') {
-    return view('pages.product', compact('slug'));
-})->name('product.show');
+// ==========================================
+// 3. CHECKOUT & ORDER COMPLETION ROUTES
+// ==========================================
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+Route::get('/order/success/{token}', [CheckoutController::class, 'success'])->name('order.success');
+Route::get('/order/resume-stripe/{token}', [CheckoutController::class, 'resumeStripe'])->name('order.resume-stripe');
+Route::post('/order/cancel/{token}', [CheckoutController::class, 'cancelUnpaid'])->name('order.cancel');
+Route::post('/order/upload-proof/{token}', [CheckoutController::class, 'uploadTransferProof'])->name('order.upload-proof');
 
-// Keranjang Belanja (Free Delivery Threshold, Fitur Kirim Hadiah Unboxing, Stripe Checkout)
-Route::get('/cart', function () {
-    return view('pages.cart');
-})->name('cart');
+// ==========================================
+// 4. ORDER TRACKING & GUEST ADOPTION ROUTES
+// ==========================================
+Route::get('/track-order', [OrderTrackingController::class, 'showTrackForm'])->name('order.track.search');
+Route::post('/track-order', [OrderTrackingController::class, 'search'])->name('order.track.post');
+Route::get('/order/{token}', [OrderTrackingController::class, 'show'])->name('order.track');
+Route::post('/order/adopt/{token}', [OrderTrackingController::class, 'adoptToGarden'])->name('order.adopt');
 
-// My Digital Garden (Kebun Virtual, Jadwal Siram, Weather-Aware Reminder, CO2 Tracker)
-Route::get('/garden', function () {
-    return view('pages.garden');
-})->name('garden');
+// ==========================================
+// 5. GIFT UNBOXING & CLAIM ROUTES
+// ==========================================
+Route::get('/gift/{token}', [GiftController::class, 'show'])->name('gift.show');
+Route::post('/gift/{token}/claim', [GiftController::class, 'claim'])->name('gift.claim');
 
-// Panduan Rawat & AI Plant Doctor (Diagnosa Daun via Ciora AI Vision & Edukasi)
-Route::get('/care', function () {
-    return view('pages.care');
-})->name('care');
+// ==========================================
+// 6. CARE & AI ASSISTANT ROUTES
+// ==========================================
+Route::get('/care', [AiController::class, 'carePage'])->name('care.index');
+Route::post('/ai/diagnose', [AiController::class, 'diagnose'])->name('ai.diagnose');
+Route::post('/ai/chat', [AiController::class, 'chat'])->name('ai.chat');
 
-// Tentang Kami (Kisah Pembibitan, Metodologi CO2, Jam Buka Nursery, Formulir Kontak)
-Route::get('/about', function () {
-    return view('pages.about');
-})->name('about');
+// ==========================================
+// 7. STRIPE WEBHOOK (CSRF Exempt via bootstrap/app.php)
+// ==========================================
+Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle'])->name('stripe.webhook');
+
+// ==========================================
+// 8. CUSTOMER AUTHENTICATION & VERIFICATION
+// ==========================================
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Email verification
+    Route::get('/email/verify', [AuthController::class, 'showVerificationNotice'])->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])
+        ->middleware(['signed', 'throttle:6,1'])
+        ->name('verification.verify');
+    Route::post('/email/verification-notification', [AuthController::class, 'resendVerificationEmail'])
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
+
+    // My Digital Garden (Member only)
+    Route::get('/garden', [GardenController::class, 'index'])->name('garden.index');
+    Route::post('/garden/{id}/water', [GardenController::class, 'water'])->name('garden.water');
+    Route::post('/garden/{id}/fertilize', [GardenController::class, 'fertilize'])->name('garden.fertilize');
+    Route::post('/garden/{id}/update', [GardenController::class, 'update'])->name('garden.update');
+});
+
+// ==========================================
+// 9. ADMIN BACK-OFFICE ROUTES (Protected by 'admin' middleware)
+// ==========================================
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+    // Orders
+    Route::get('/orders', [AdminController::class, 'orders'])->name('admin.orders');
+    Route::get('/orders/{id}', [AdminController::class, 'orderDetail'])->name('admin.orders.detail');
+    Route::post('/orders/{id}/refund', [AdminController::class, 'refund'])->name('admin.refund');
+
+    // Bank Transfer Verifications
+    Route::get('/verifications', [AdminController::class, 'verifications'])->name('admin.verifications');
+    Route::post('/verifications/{id}/approve', [AdminController::class, 'approveTransfer'])->name('admin.verifications.approve');
+    Route::post('/verifications/{id}/reject', [AdminController::class, 'rejectTransfer'])->name('admin.verifications.reject');
+
+    // Store Pickup POS Desk
+    Route::get('/pickup', [AdminController::class, 'pickup'])->name('admin.pickup');
+    Route::post('/pickup/{id}/ready', [AdminController::class, 'markReadyForPickup'])->name('admin.pickup.ready');
+    Route::post('/pickup/{id}/handover', [AdminController::class, 'confirmPickupHandover'])->name('admin.pickup.handover');
+
+    // Shipping & Delivery Dispatch
+    Route::get('/delivery', [AdminController::class, 'delivery'])->name('admin.delivery');
+    Route::post('/delivery/{id}/ship', [AdminController::class, 'markShipped'])->name('admin.delivery.ship');
+    Route::post('/delivery/{id}/deliver', [AdminController::class, 'markDelivered'])->name('admin.delivery.deliver');
+
+    // Plant Catalog & Inventory
+    Route::get('/plants', [AdminController::class, 'plants'])->name('admin.plants');
+    Route::post('/plants/{id}/deactivate', [AdminController::class, 'deactivatePlant'])->name('admin.plants.deactivate');
+
+    // Settings
+    Route::get('/settings', [AdminController::class, 'settings'])->name('admin.settings');
+    Route::post('/settings', [AdminController::class, 'saveSettings'])->name('admin.settings.save');
+});
+
+// Private receipt proof signed URL viewer (requires signed link)
+Route::get('/admin/proof-view', [AdminController::class, 'viewPrivateProof'])->name('admin.proof.view');

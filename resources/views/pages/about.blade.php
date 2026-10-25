@@ -1,45 +1,45 @@
 @extends('layouts.app')
 
-@section('title', 'Tentang Pembibitan — Plantify Official')
+@section('title', 'About Our Nursery — Plantify Official')
 
 @section('content')
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16">
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-xs text-forest-3 font-mono mb-6" aria-label="Breadcrumb">
-            <a href="{{ route('home') }}" class="hover:text-ochre">Beranda</a>
+            <a href="{{ route('home') }}" class="hover:text-ochre">Home</a>
             <span>/</span>
-            <span class="text-forest font-semibold">Tentang Kami</span>
+            <span class="text-forest font-semibold">About Nursery</span>
         </nav>
 
         <!-- Nursery Story Header -->
         <div class="max-w-3xl mb-12">
-            <span class="text-xs font-mono font-semibold text-ochre-deep uppercase tracking-wider">Kisah Kami</span>
+            <span class="text-xs font-mono font-semibold text-ochre uppercase tracking-wider">Our Botanical Heritage</span>
             <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-forest mt-1.5 tracking-tight leading-tight">
-                Kami Menumbuhkan Tanaman, Bukan Sekadar Menjualnya.
+                Cultivated with botanical patience, backed by digital care.
             </h1>
             <p class="text-sm sm:text-base text-forest-2 mt-4 leading-relaxed">
-                Plantify lahir dari keyakinan sederhana: setiap orang berhak menikmati keasrian tanaman di rumahnya tanpa rasa bersalah melihat tanaman mati sia-sia. Kami menggabungkan bibit unggul pembibitan mandiri dengan panduan digital cermat dan kecerdasan buatan.
+                Plantify Official was established with a singular mission: to make thriving houseplants accessible and joyful. We combine greenhouse acclimation, peat-free organic growing mediums, and an intelligent Digital Garden companion so every plant flourishes in its new home.
             </p>
         </div>
 
         <!-- Facts & Numbers Grid -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-16">
-            <div class="bg-paper border border-hairline rounded-2xl p-6 text-center">
+            <div class="bg-paper border border-hairline rounded-2xl p-6 text-center shadow-sm">
                 <span class="font-display font-extrabold text-3xl sm:text-4xl text-forest">100%</span>
-                <p class="text-xs text-forest-3 mt-1.5 font-medium">Bebas Gambut (Peat-Free)</p>
+                <p class="text-xs text-forest-3 mt-1.5 font-medium">Peat-Free Organic Substrate</p>
             </div>
-            <div class="bg-paper border border-hairline rounded-2xl p-6 text-center">
-                <span class="font-display font-extrabold text-3xl sm:text-4xl text-forest">30 Hari</span>
-                <p class="text-xs text-forest-3 mt-1.5 font-medium">Garansi Hidup Ganti Baru</p>
+            <div class="bg-paper border border-hairline rounded-2xl p-6 text-center shadow-sm">
+                <span class="font-display font-extrabold text-3xl sm:text-4xl text-forest">14 Days</span>
+                <p class="text-xs text-forest-3 mt-1.5 font-medium">Growth Health Guarantee</p>
             </div>
-            <div class="bg-paper border border-hairline rounded-2xl p-6 text-center">
-                <span class="font-display font-extrabold text-3xl sm:text-4xl text-ochre-deep">14.8 Ton</span>
-                <p class="text-xs text-forest-3 mt-1.5 font-medium">CO₂ Terserap / Tahun</p>
+            <div class="bg-paper border border-hairline rounded-2xl p-6 text-center shadow-sm">
+                <span class="font-display font-extrabold text-3xl sm:text-4xl text-ochre">14.8 Tons</span>
+                <p class="text-xs text-forest-3 mt-1.5 font-medium">CO2 Captured Annually</p>
             </div>
-            <div class="bg-paper border border-hairline rounded-2xl p-6 text-center">
-                <span class="font-display font-extrabold text-3xl sm:text-4xl text-forest">&gt; 5.000</span>
-                <p class="text-xs text-forest-3 mt-1.5 font-medium">Plant Parent Terbantu</p>
+            <div class="bg-paper border border-hairline rounded-2xl p-6 text-center shadow-sm">
+                <span class="font-display font-extrabold text-3xl sm:text-4xl text-forest">&gt; 5,000</span>
+                <p class="text-xs text-forest-3 mt-1.5 font-medium">Plant Parents Supported</p>
             </div>
         </div>
 
@@ -47,71 +47,53 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center mb-16">
             <div class="space-y-4">
                 <h2 class="font-display font-bold text-2xl sm:text-3xl text-forest tracking-tight">
-                    Mengapa Harus Dari Pembibitan Mandiri?
+                    Why Greenhouse Acclimation Matters
                 </h2>
                 <p class="text-xs sm:text-sm text-forest-2 leading-relaxed">
-                    Banyak toko tanaman hias hanya berperan sebagai *dropshipper* atau pengimpor yang memajang tanaman stres dari perjalanan kontainer berhari-hari. Akibatnya, tanaman sering mati mendadak dalam kurun seminggu setelah tiba di rumah Anda.
+                    Most retail houseplants are shipped directly from humid equatorial shade houses into harsh consumer living rooms, causing shocking leaf loss within weeks.
                 </p>
                 <p class="text-xs sm:text-sm text-forest-2 leading-relaxed">
-                    Di Plantify, setiap anakan tanaman dirawat di greenhouse dengan ventilasi terkontrol, nutrisi organik, dan media tanam kokoh. Sebelum masuk katalog pengiriman, tanaman telah melewati fase aklimatisasi minimal 60 hari untuk memastikan sistem perakarannya siap menghadapi kondisi ruangan baru Anda.
+                    At Plantify, every specimen undergoes a rigorous 4-to-6-week intermediate humidity stepping process before being certified ready for adoption. We inspect root systems, prune dormant runners, and ensure root balls are robust.
                 </p>
-            </div>
-
-            <div class="relative">
-                <img src="https://images.unsplash.com/photo-1470058869958-2a77ade41c02?w=900&q=72&auto=format&fit=crop" alt="Greenhouse Plantify" class="w-full aspect-[4/3] object-cover rounded-3xl shadow-lg border border-hairline" loading="lazy" />
-            </div>
-        </div>
-
-        <!-- Eco-Impact & Methodology Section (PRD Bagian 6.3) -->
-        <div class="bg-paper border border-hairline rounded-3xl p-6 sm:p-10 mb-16 shadow-sm">
-            <div class="max-w-2xl">
-                <span class="text-xs font-mono font-semibold text-stock uppercase tracking-wider">Komitmen Keberlanjutan</span>
-                <h3 class="font-display font-bold text-xl sm:text-2xl text-forest mt-1 tracking-tight">
-                    Metodologi Eco-Impact & Pelacak Serapan CO₂
-                </h3>
-                <p class="text-xs sm:text-sm text-forest-3 mt-2 leading-relaxed">
-                    Setiap tanaman di Plantify memiliki atribut indeks serapan karbon (<code class="bg-glass text-forest px-1 py-0.5 rounded text-[11px]">co2_absorption_rate</code>) yang dihitung berdasarkan luas permukaan daun, biomassa, dan laju transpirasi. Melalui fitur "My Digital Garden", Anda dapat memantau kontribusi nyata kebun mini Anda dalam menyerap emisi karbon perkotaan setiap harinya.
-                </p>
-            </div>
-        </div>
-
-        <!-- Nursery Visit & Contact Form -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-            <div class="space-y-4">
-                <span class="text-xs font-mono font-semibold text-ochre-deep uppercase tracking-wider">Kunjungi Nursery</span>
-                <h3 class="font-display font-bold text-2xl text-forest tracking-tight">Pintu Green House Kami Selalu Terbuka</h3>
-                <p class="text-xs sm:text-sm text-forest-3 leading-relaxed">
-                    Ingin memilih tanaman secara langsung atau berkonsultasi mengenai penataan tanaman di kantor dan rumah? Silakan berkunjung ke nursery kami.
-                </p>
-                <div class="space-y-2 text-xs text-forest-2 pt-2">
-                    <p><strong>Alamat:</strong> Jl. Agrowisata Hijau No. 24, Kawasan Nursery Selatan</p>
-                    <p><strong>Jam Operasional:</strong> Selasa &ndash; Minggu (08.30 &ndash; 17.00 WIB)</p>
-                    <p><strong>Email Kontak:</strong> nursery@plantify.ramadadawah.my.id</p>
+                <div class="pt-2">
+                    <a href="{{ route('shop') }}" class="btn btn-primary text-xs">
+                        Browse Acclimated Plants &rarr;
+                    </a>
                 </div>
             </div>
 
-            <!-- Contact Form -->
-            <div class="bg-paper border border-hairline rounded-3xl p-6 sm:p-8 shadow-sm">
-                <h4 class="font-display font-bold text-lg text-forest mb-4">Kirim Pesan atau Pertanyaan</h4>
-                <form class="space-y-4" data-demo-form="Terima kasih! Pesan Anda telah kami terima, tim kami akan membalasnya dalam 1x24 jam.">
-                    <div>
-                        <label class="block text-xs font-semibold text-forest mb-1">Nama Lengkap</label>
-                        <input type="text" required placeholder="Nama Anda..." class="w-full h-11 px-4 text-xs bg-glass border border-hairline rounded-xl focus:outline-none focus:border-ochre text-forest" />
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-forest mb-1">Email</label>
-                        <input type="email" required placeholder="nama@email.com..." class="w-full h-11 px-4 text-xs bg-glass border border-hairline rounded-xl focus:outline-none focus:border-ochre text-forest" />
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-forest mb-1">Pesan atau Konsultasi</label>
-                        <textarea rows="4" required placeholder="Ceritakan pertanyaan perawatan atau kebutuhan tanaman Anda..." class="w-full p-3 text-xs bg-glass border border-hairline rounded-xl focus:outline-none focus:border-ochre text-forest"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary text-xs w-full py-3">
-                        Kirim Pesan ke Tim Nursery
-                    </button>
-                </form>
+            <div class="rounded-3xl overflow-hidden bg-glass border border-hairline shadow-md aspect-[4/3]">
+                <img src="https://images.unsplash.com/photo-1470058869958-2a77ade41c02?w=800&q=75&auto=format&fit=crop" alt="Greenhouse nursery aisle" class="w-full h-full object-cover" />
             </div>
         </div>
+
+        <!-- Physical Nursery Location & Hours -->
+        <div class="bg-forest text-glass rounded-3xl p-8 sm:p-12 shadow-xl border border-forest-2">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-3">
+                    <span class="text-xs font-mono uppercase tracking-wider text-ochre font-semibold">Physical Counter Desk</span>
+                    <h3 class="font-display font-bold text-2xl text-glass">Visit Our Nursery &amp; Pickup Desk</h3>
+                    <p class="text-xs sm:text-sm text-glass/80 leading-relaxed">
+                        Experience our botanical collection in person, consult with resident horticulturists, or collect your online orders seamlessly with your pickup code.
+                    </p>
+                    <div class="space-y-1 text-xs text-glass/70 pt-2 font-mono">
+                        <p><strong>Address:</strong> Jl. Agrowisata Hijau No. 24, Botanical District, Jakarta Selatan</p>
+                        <p><strong>Store Pickup Hours:</strong> Tuesday &ndash; Sunday, 08:30 &ndash; 17:00 (Closed Mondays)</p>
+                    </div>
+                </div>
+
+                <div class="p-6 bg-forest-dark rounded-2xl border border-forest-2 space-y-4">
+                    <h4 class="font-display font-bold text-base text-glass">Have Questions About Your Plants?</h4>
+                    <p class="text-xs text-glass/70 leading-relaxed">
+                        Our botanical care team is on standby to assist with fertilization questions, potting queries, and corporate plant styling.
+                    </p>
+                    <a href="{{ route('care.index') }}" class="btn btn-ochre text-xs inline-flex">
+                        Consult AI Care Doctor &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 @endsection
