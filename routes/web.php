@@ -32,20 +32,30 @@ Route::get('/shop', [CatalogController::class, 'shop'])->name('shop');
 Route::get('/product/{slug?}', [CatalogController::class, 'product'])->name('product.show');
 Route::get('/about', [CatalogController::class, 'about'])->name('about');
 
-// Web App Proposal PDF (Direct Inline Browser Viewer & Download)
-Route::get('/proposal-pdf', function () {
+// Web App Proposal PDF (Direct Inline Browser Viewer & Download with Strict Anti-Cache Headers)
+$proposalHandler = function () {
     $path = public_path('PROPOSAL_PENGEMBANGAN_PLANTIFY.pdf');
     if (!file_exists($path)) {
         abort(404, 'Proposal document not found.');
     }
-    return response()->file($path, [
+    return response(file_get_contents($path), 200, [
         'Content-Type' => 'application/pdf',
         'Content-Disposition' => 'inline; filename="Plantify-Official-Web-App-Proposal.pdf"',
-        'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0, post-check=0, pre-check=0',
+        'Cache-Control' => 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0, s-maxage=0, private',
+        'CDN-Cache-Control' => 'no-store',
+        'Cloudflare-CDN-Cache-Control' => 'no-store',
+        'Surrogate-Control' => 'no-store',
         'Pragma' => 'no-cache',
-        'Expires' => '0',
+        'Expires' => 'Wed, 11 Jan 1984 05:00:00 GMT',
+        'ETag' => '"' . md5_file($path) . '"',
     ]);
-})->name('proposal.pdf');
+};
+
+Route::get('/proposal-pdf', $proposalHandler)->name('proposal.pdf');
+Route::get('/proposal-pdf.pdf', $proposalHandler);
+Route::get('/proposal.pdf', $proposalHandler);
+Route::get('/proposal', $proposalHandler);
+Route::get('/proposal-en', $proposalHandler);
 
 // ==========================================
 // 2. SHOPPING CART ROUTES (Session + Member Sync)
